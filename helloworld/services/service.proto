@@ -1,0 +1,23 @@
+syntax = "proto3";
+import "karma.proto";
+
+package druta;
+
+option (appConfig) = { name : "YOURAPPNAME" };
+
+
+message HelloWorldRequest {
+    string from = 1;
+}
+
+message HelloWorldResponse {
+    string message = 1;
+}
+
+service MyService {
+
+    option (karmaConfig) = { script: "exec.js" };
+
+    rpc helloWorld(HelloWorldRequest) returns (HelloWorldResponse) {}
+
+}

@@ -1,0 +1,79 @@
+syntax = "proto3";
+import "karma.proto";
+
+package druta;
+
+option (appConfig) = { name : "YOURAPPNAME" };
+
+message Jobs {
+    string id = 1;
+    int64 createTime = 2;
+    int64 startTime = 3;
+    int64 endTime = 4;
+    string type = 5;
+    string status = 6;
+    int32 statusCode = 7;
+    string params = 8;
+    string output = 9;
+
+}
+
+enum JobType {
+    UNKNOWN = 0;
+    FIBONACCI = 1;
+}
+
+
+message JobCreateRequest {
+    JobType type = 1;
+    map<string,string> params = 2;
+}
+
+message JobCreateResponse {
+    bool error = 1;
+    string message = 2;
+    string jobId = 3;
+}
+
+message GetJobStatus {
+    string jobId = 3;
+}
+
+message GetJobResponse {
+    bool error = 1;
+    string message = 2;
+    Jobs job = 3;
+}
+
+message ExecJob {
+    Jobs job = 1;
+}
+
+service JobsService {
+    option (karmaConfig) = { initScripts: ["init.js"] script: "jobs.js" };
+
+    //This shows you can pass configuration to you services using protobuf Struct message
+    option (serviceConfig) = {
+        fields {
+            key: "param1"
+            value: { string_value : "value1"}
+        }
+        fields {
+            key: "structParam"
+            value: {
+                struct_value : {
+                    fields {
+                        key: "param1"
+                        value: {
+                            string_value : "value1"
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    rpc enqueue(JobCreateRequest) returns (JobCreateResponse) {}
+    rpc get(GetJobStatus) returns (GetJobResponse) {}
+
+}

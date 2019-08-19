@@ -1,0 +1,71 @@
+syntax = "proto3";
+import "karma.proto";
+import "dynamodb.proto";
+
+package druta;
+
+option (appConfig) = { name : "YOURAPPNAME" };
+
+message MovieInfo {
+    //DATA_SCHEMA declares that these message types will be used to store data in dynamodb
+    option (messageConfig) = { type : DATA_SCHEMA };
+    repeated string genres = 1;
+    string release_date = 2;
+    int32 rank = 3;
+    float rating = 4;
+    int32 running_time_secs = 5;
+
+    string image_url = 6;
+    repeated string actors = 7;
+    repeated string directors = 8;
+    string plot = 9;
+}
+
+message MovieProto {
+    option (messageConfig) = { type : DATA_SCHEMA };
+    int32 year = 1;
+    MovieInfo info = 2;
+    string title = 3;
+}
+
+message GetActorsRequest {
+    int32 year = 1;
+    string title = 2;
+}
+
+message GetActorsResponse {
+    repeated string actors = 1;
+}
+
+message CreateMovieRequest {
+    MovieProto item = 1;
+}
+
+message CreateMovieResponse {
+    bool success = 1;
+}
+
+message QueryRequest {
+    int32 year = 1;
+    string title = 2;
+    int32 year1 = 3;
+    int32 year2 = 4;
+}
+
+message QueryResponse {
+    repeated MovieProto items = 1;
+}
+
+
+service MoviesService {
+
+    option (karmaConfig) = { script: "movies.js" };
+
+    option (serviceConfig) = { };
+
+    rpc getActors(GetActorsRequest) returns (GetActorsResponse) {}
+    rpc createMovie(CreateMovieRequest) returns (CreateMovieResponse) {}
+    rpc queryByYear(QueryRequest) returns (QueryResponse) {}
+    rpc queryByTitle(QueryRequest) returns (QueryResponse) {}
+    rpc scanByYear(QueryRequest) returns (QueryResponse) {}
+}
