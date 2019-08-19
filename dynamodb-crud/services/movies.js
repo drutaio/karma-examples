@@ -10,7 +10,7 @@ var drutaVahan =  {
                     range : { title : argument.title }
                 }
             })
-            console.log('UPDATED2 Return item = ' + JSON.stringify(x, null, 2))
+            console.log('UPDATED Return item = ' + JSON.stringify(x, null, 2))
             return { actors : x.info.actors };
         }
 
@@ -21,7 +21,7 @@ var drutaVahan =  {
                 shape: 'native',
                 item : argument.item
             });
-            console.log('UPDATED2 Return item = ' + JSON.stringify(x, null, 2))
+            console.log('UPDATED Return item = ' + JSON.stringify(x, null, 2))
             return { success : true };
         }
 
@@ -46,7 +46,7 @@ var drutaVahan =  {
                 shape: 'js',
                 query : query
             });
-            console.log('UPDATED2 Return item = ' + JSON.stringify(x, null, 2))
+            console.log('UPDATED Return item = ' + JSON.stringify(x, null, 2))
             return { items : x };
         }
 
@@ -70,7 +70,7 @@ var drutaVahan =  {
                 shape: 'js',
                 query : query
             });
-            console.log('UPDATED2 Return item = ' + JSON.stringify(x, null, 2))
+            console.log('UPDATED Return item = ' + JSON.stringify(x, null, 2))
             return { items : x };
         }
 
@@ -98,7 +98,7 @@ var drutaVahan =  {
                 shape: 'js',
                 query : scanQuery
             });
-            console.log('UPDATED2 Return item = ' + JSON.stringify(x, null, 2))
+            console.log('UPDATED Return item = ' + JSON.stringify(x, null, 2))
             return { items : x };
         }
     },
